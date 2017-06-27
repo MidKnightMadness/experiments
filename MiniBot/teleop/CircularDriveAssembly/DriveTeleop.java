@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.MiniBot.teleop.CirccularDriveAssembly.DriveAssembly;
+package org.firstinspires.ftc.teamcode.MiniBot.teleop.CircularDriveAssembly;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "Mini Bot Drive", group = "Mini Bot")
+@TeleOp(name = "Mini Bot Circular Drive", group = "Mini Bot")
 public class DriveTeleop extends OpMode {
 
     private DriveController controller;

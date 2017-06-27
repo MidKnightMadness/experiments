@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MiniBot.teleop.CirccularDriveAssembly.DriveAssembly;
+package org.firstinspires.ftc.teamcode.MiniBot.teleop.CircularDriveAssembly;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -14,28 +14,6 @@ public class DriveController {
     private DcMotor right;
 
     public void init(Telemetry telemetry, HardwareMap hardwareMap) {
-        left = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_LEFT);
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        telemetry.addData("Left Power", new Func<Double>() {
-            @Override
-            public Double value() {
-                return left.getPower();
-            }
-        });
-        telemetry.addData("Left Position", new Func<Integer>() {
-            @Override
-            public Integer value() {
-                return left.getCurrentPosition();
-            }
-        });
-        telemetry.addData("Left Target", new Func<Integer>() {
-            @Override
-            public Integer value() {
-                return left.getTargetPosition();
-            }
-        });
-
         right = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_RIGHT);
         right.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -63,8 +41,7 @@ public class DriveController {
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
-        left.setPower(gamepad1.left_stick_y);
-        right.setPower(gamepad1.right_stick_y);
+        right.setPower(gamepad1.b);
     }
 
     public void stop() {
