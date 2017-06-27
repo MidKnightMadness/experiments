@@ -4,13 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "Mini Bot Circular Drive", group = "Mini Bot")
-public class DriveTeleop extends OpMode {
+public class CircularDriveTeleop extends OpMode {
 
-    private DriveController controller;
+    private CircularDriveController controller;
 
-    public DriveTeleop() {
+    public CircularDriveTeleop() {
         super();
-        controller = new DriveController();
+        controller = new CircularDriveController();
     }
 
     @Override

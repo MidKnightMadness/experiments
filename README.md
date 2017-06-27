@@ -17,3 +17,5 @@ Simple autonomous examples are also included, but they do not use this format.
 - Copy MainBot/ and MiniBot/ directories into ftc_app/TeamCode/src/main/java/org/firstinspires/ftc/teamcode
 - Build and Install on Robot Controller
 - Each assembly has its own TeleOp, as well as Main Bot and Mini Bot (good luck running it w/o the bots though)
+
+- run ssh-keygen to generate id_rsa in .ssh if on mac

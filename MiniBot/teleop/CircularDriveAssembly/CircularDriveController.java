@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MiniBot.teleop.CrossCommunicator;
 
-public class DriveController {
+public class CircularDriveController {
     private DcMotor left;
     private DcMotor right;
 
@@ -41,7 +41,7 @@ public class DriveController {
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
-        right.setPower(gamepad1.b);
+        right.setPower(gamepad1.b ? 0 : 1);
     }
 
     public void stop() {
