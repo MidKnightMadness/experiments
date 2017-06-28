@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MiniBot.teleop.CrossCommunicator;
 
 public class CircularDriveController {
-    private DcMotor left;
+    //private DcMotor left;
     private DcMotor right;
 
     public void init(Telemetry telemetry, HardwareMap hardwareMap) {
@@ -41,7 +41,15 @@ public class CircularDriveController {
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
-        right.setPower(gamepad1.b ? 0 : 1);
+        if (gamepad1.right_bumper) {
+            right.setDirection(DcMotorSimple.Direction.FORWARD);
+            right.setPower(1);
+        } else if (gamepad1.left_bumper) {
+            right.setDirection(DcMotorSimple.Direction.REVERSE);
+            right.setPower(1);
+        } else {
+            right.setPower(0);
+        }
     }
 
     public void stop() {
