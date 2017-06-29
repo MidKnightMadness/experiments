@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MiniBot.teleop.DriveAssembly;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -15,7 +14,7 @@ public class DriveController {
 
     public void init(Telemetry telemetry, HardwareMap hardwareMap) {
         left = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_LEFT);
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
+        left.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Left Power", new Func<Double>() {
             @Override
@@ -37,7 +36,7 @@ public class DriveController {
         });
 
         right = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_RIGHT);
-        right.setDirection(DcMotorSimple.Direction.FORWARD);
+        right.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Right Power", new Func<Double>() {
             @Override

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.MiniBot.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.MiniBot.teleop.CrossCommunicator;
 
@@ -17,7 +16,7 @@ public class AutoDriveLinearOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         leftMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_LEFT);
         leftMotor.resetDeviceConfigurationForOpMode();
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         rightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_RIGHT);
         rightMotor.resetDeviceConfigurationForOpMode();

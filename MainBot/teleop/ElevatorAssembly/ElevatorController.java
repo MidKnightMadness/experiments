@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MainBot.teleop.ElevatorAssembly;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -21,7 +20,7 @@ public class ElevatorController {
         motor = hardwareMap.dcMotor.get(CrossCommunicator.Elevator.MOTOR);
         motor.resetDeviceConfigurationForOpMode();
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        motor.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Elevator Power", new Func<Double>() {
             @Override

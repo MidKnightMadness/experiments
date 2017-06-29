@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.MainBot.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.MainBot.teleop.CrossCommunicator;
 
@@ -24,7 +23,7 @@ public class AutoDriveLinearOp extends LinearOpMode {
         frontRightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_FRONT_RIGHT);
         frontRightMotor.resetDeviceConfigurationForOpMode();
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         backLeftMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_BACK_LEFT);
         backLeftMotor.resetDeviceConfigurationForOpMode();
@@ -33,7 +32,7 @@ public class AutoDriveLinearOp extends LinearOpMode {
         backRightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_BACK_RIGHT);
         backRightMotor.resetDeviceConfigurationForOpMode();
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Status", "Initialized and ready!");
         telemetry.update();

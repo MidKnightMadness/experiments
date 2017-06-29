@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MainBot.teleop.DriveAssembly;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
@@ -43,7 +42,7 @@ public class DriveController {
         frontRightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_FRONT_RIGHT);
         frontRightMotor.resetDeviceConfigurationForOpMode();
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Front Right Power", new Func<Double>() {
             @Override
@@ -90,7 +89,7 @@ public class DriveController {
         backRightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_BACK_RIGHT);
         backRightMotor.resetDeviceConfigurationForOpMode();
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Back Right Power", new Func<Double>() {
             @Override

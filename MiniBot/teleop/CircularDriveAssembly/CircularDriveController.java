@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MiniBot.teleop.CircularDriveAssembly;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -15,7 +14,7 @@ public class CircularDriveController {
 
     public void init(Telemetry telemetry, HardwareMap hardwareMap) {
         right = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_RIGHT);
-        right.setDirection(DcMotorSimple.Direction.FORWARD);
+        right.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Right Power", new Func<Double>() {
             @Override
@@ -42,10 +41,10 @@ public class CircularDriveController {
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad1.right_bumper) {
-            right.setDirection(DcMotorSimple.Direction.FORWARD);
+            right.setDirection(DcMotor.Direction.FORWARD);
             right.setPower(1);
         } else if (gamepad1.left_bumper) {
-            right.setDirection(DcMotorSimple.Direction.REVERSE);
+            right.setDirection(DcMotor.Direction.REVERSE);
             right.setPower(1);
         } else {
             right.setPower(0);

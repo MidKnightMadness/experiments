@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MainBot.teleop.IntakeAssembly;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -17,7 +16,7 @@ public class IntakeController {
         motor = hardwareMap.dcMotor.get(CrossCommunicator.Intake.MOTOR);
         motor.resetDeviceConfigurationForOpMode();
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        motor.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Intake Power", new Func<Double>() {
             @Override
