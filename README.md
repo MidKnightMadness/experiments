@@ -19,3 +19,4 @@ Simple autonomous examples are also included, but they do not use this format.
 - Each assembly has its own TeleOp, as well as Main Bot and Mini Bot (good luck running it w/o the bots though)
 
 - run ssh-keygen to generate id_rsa in .ssh if on mac
+- if phones still do not appear, run <code>~/Library/Android/sdk/platform-tools/adb kill-server</code> and then <code>~/Library/Android/sdk/platform-tools/adb devices</code>
