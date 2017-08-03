@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.MiniBot.teleop;
+package org.firstinspires.ftc.teamcode.SimpleServo.teleop;
 
 public class CrossCommunicator {
 
-    public static class Drive {
-        public static final String MOTOR_LEFT = "left";
-        public static final String MOTOR_RIGHT = "right";
+    public static class Servo {
+        public static final String SERVO = "servo";
     }
 }

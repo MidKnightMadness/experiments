@@ -15,7 +15,7 @@ public class DriveController {
     public void init(Telemetry telemetry, HardwareMap hardwareMap) {
         left = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_LEFT);
         left.setDirection(DcMotor.Direction.REVERSE);
-
+        left.setTargetPosition(10);
         telemetry.addData("Left Power", new Func<Double>() {
             @Override
             public Double value() {

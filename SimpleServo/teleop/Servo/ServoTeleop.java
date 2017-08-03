@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.SimpleServo.teleop.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = Simple Servo, group = Simple Servo)
+@TeleOp(name = "Simple Servo", group = "Simple Servo")
 public class ServoTeleop extends OpMode {
 
     private ServoController controller;

@@ -3,7 +3,7 @@ This experiment copied the TeleOp behavior of the 2016-2017 Main Bot and MiniBot
 
 Simple autonomous examples are also included, but they do not use this format.
 
-## How to Get It All Working on Your Computer
+## How to Git It All Working on Your Computer
 
 ### 1. Get git
 

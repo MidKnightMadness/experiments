@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.MiniBot.teleop.CrossCommunicator;
 
-@Autonomous(name = "Mini Bot Delay Move")
+@Autonomous(name = "Mini Bot Delay Move", group = "Mini Bot")
 public class AutoDriveLinearOp extends LinearOpMode {
 
     private DcMotor leftMotor;
@@ -16,10 +16,10 @@ public class AutoDriveLinearOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         leftMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_LEFT);
         leftMotor.resetDeviceConfigurationForOpMode();
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         rightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_RIGHT);
         rightMotor.resetDeviceConfigurationForOpMode();
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
         telemetry.addData("Status", "Initialized and ready!");
@@ -33,6 +33,7 @@ public class AutoDriveLinearOp extends LinearOpMode {
             telemetry.update();
             idle();
         }
+        telemetry.addLine("BOOM!");
 
         // Drive forward for 5 seconds
         leftMotor.setPower(1);
