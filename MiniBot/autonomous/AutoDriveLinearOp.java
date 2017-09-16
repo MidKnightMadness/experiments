@@ -19,7 +19,7 @@ public class AutoDriveLinearOp extends LinearOpMode {
 
         rightMotor = hardwareMap.dcMotor.get(CrossCommunicator.Drive.MOTOR_RIGHT);
         rightMotor.resetDeviceConfigurationForOpMode();
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        //rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
         telemetry.addData("Status", "Initialized and ready!");
@@ -39,7 +39,7 @@ public class AutoDriveLinearOp extends LinearOpMode {
         leftMotor.setPower(1);
         rightMotor.setPower(1);
 
-        waitUntil = time + 1;
+        waitUntil = time + 3;
         while(time < waitUntil)
             idle();
         leftMotor.setPower(0);

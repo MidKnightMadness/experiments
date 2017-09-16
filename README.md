@@ -20,3 +20,40 @@ Simple autonomous examples are also included, but they do not use this format.
 
 - run ssh-keygen to generate id_rsa in .ssh if on mac
 - if phones still do not appear, run <code>~/Library/Android/sdk/platform-tools/adb kill-server</code> and then <code>~/Library/Android/sdk/platform-tools/adb devices</code>
+
+## Notes
+
+### Installing OpenCV:
+- File > New > Import Module...
+- point to java folder in android release of opencv
+- Install any dependencies that Android Studio decides it wants
+- Modify build.gradle file in opencv
+<code>
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 19
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+</code>
+- Right-click on FtcRobotController in the project view and select "Open Module Settings"
+- Set OpenCV as dependency (Dependencies > +)
+- Switch to "Project" view and copy the sdk/native/libs/ folder from the opencv download to FtcRobotController/src/main/jniLibs/
+- Should now build ok
+- You can now import org.opencv.* to your project
