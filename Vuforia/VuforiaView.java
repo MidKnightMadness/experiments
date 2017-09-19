@@ -48,10 +48,13 @@ import static java.lang.System.err;
 public class VuforiaView extends LinearOpMode {
 
     // whether or not to save the cropped image
-    private boolean SAVE_CROPPED = false;
+    private final boolean SAVE_CROPPED = false;
 
     // display textual representation of image and wait one second or not
-    private boolean SHOW_TEXT_IMAGE = false;
+    private final boolean SHOW_TEXT_IMAGE = false;
+
+    //How many times to run through? Suggested: 7
+    private final int NUM_OF_TAKES = 7;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -133,7 +136,7 @@ public class VuforiaView extends LinearOpMode {
 
         /* ************SETUP VARS FOR RUN!************* */
         //Suspected pictograph codes
-        int[] pictographCodes = new int[5];
+        int[] pictographCodes = new int[NUM_OF_TAKES];
 
         //Final pictograph code --> 0: L, 1: C, 2: R, 3: N
         int finalPictographCode = 3;
@@ -192,7 +195,7 @@ public class VuforiaView extends LinearOpMode {
                     /* ************DECIDE WHICH PICTOGRAPH WE ARE LOOKING AT************* */
 
                     // calculate on first 5 runs through to have more resilience to shaking
-                    if (runCount < 5) {
+                    if (runCount < NUM_OF_TAKES) {
 
                         //Get vuforia's raw Pose data to be converted to OpenCV
                         OpenGLMatrix rawPoseV = ((VuforiaTrackableDefaultListener) item.getListener()).getRawPose();
@@ -368,13 +371,14 @@ public class VuforiaView extends LinearOpMode {
                                                 //increase inARow
                                                 inARow++;
 
-                                                //if more than 13 in a row... (Committing before further changes...)
+                                                //if more than 13 in a row, reset counters as if interrupted because this is the end/past the end of the first hex
                                                 if (inARow > 13) {
-                                                    onFirstHex = false; // if both black hexes are touching, reset in center
+                                                    onFirstHex = false;
                                                     inARow = 0;
                                                 }
                                                 if (inARow > 4 && !onFirstHex) {
                                                     onFirstHex = true;
+                                                    //If past halfway, lasthex, else firsthex
                                                     if (ch > 15) {
                                                         lasthex = 'B';
                                                     } else {
@@ -388,6 +392,7 @@ public class VuforiaView extends LinearOpMode {
                                             }
                                         }
 
+                                        //Decide based on first and second hex
                                         if (firsthex == 'B') {
                                             if (lasthex == 'O') {
                                                 pictographCode = 0;
@@ -402,11 +407,14 @@ public class VuforiaView extends LinearOpMode {
                                             }
                                         }
                                     }
+
+                                    //Both hexes orange... increase blackOff and go to beginning of loop
                                     if (pictographCode == 3) {
                                         blackOff += blackOff > 10 ? 7 : 15;
                                     }
                                 } while (pictographCode == 3);
 
+                                //save current code to array for later
                                 pictographCodes[runCount] = pictographCode;
 
 
@@ -417,20 +425,26 @@ public class VuforiaView extends LinearOpMode {
 
                             }
                         }
-                    } else if (runCount == 5) {
+                        //When finished with enough tries, find most common answer (sometimes 1+ is different...)
+                    } else if (runCount == NUM_OF_TAKES) {
                         int[] codes = new int[3];
                         for (int code : pictographCodes) {
+
+                            //increase the code
                             if (code != 3) {
                                 codes[code]++;
                             }
                         }
 
                         String finalColumn = "RIGHT";
+                        finalPictographCode = 2;
 
                         if (codes[0] > codes[1] && codes[0] > codes[2]) {
                             finalColumn = "LEFT!";
+                            finalPictographCode = 0;
                         } else if (codes[1] > codes[0] && codes[1] > codes[2]){
                             finalColumn = "CENTER!";
+                            finalPictographCode = 1;
                         }
 
                         telemetry.addLine(finalColumn);
