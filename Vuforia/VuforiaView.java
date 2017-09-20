@@ -125,11 +125,6 @@ public class VuforiaView extends LinearOpMode {
         //Prepares tracking asset group -- takes 1s
         VuforiaTrackables pictographTrackables = vuforia.loadTrackablesFromAsset("Pictographs");
 
-        //Necessary? Sets names for future reference -- can these be specified in the asset?
-        pictographTrackables.get(0).setName("Right");
-        pictographTrackables.get(1).setName("Center");
-        pictographTrackables.get(2).setName("Left");
-
         //Log time
         times[3] = time - times[2];
 
@@ -156,6 +151,8 @@ public class VuforiaView extends LinearOpMode {
         telemetry.addLine("Status: Initialized and ready!");
         telemetry.update();
         waitForStart();
+
+        double startTime = time;
 
 
 
@@ -340,9 +337,10 @@ public class VuforiaView extends LinearOpMode {
 
                                     //SHOW_TEXT_IMAGE, show the textual image representation in telemetry and wait 1 second to be able to see it
                                     if (SHOW_TEXT_IMAGE) {
-                                        for (int line = 0; line < textImage.length; line++) {
-                                            telemetry.addLine(textImage[line]);
+                                        for (String line: textImage) {
+                                            telemetry.addLine(line);
                                         }
+                                        telemetry.update();
 
                                         double waitUntil = time + 1;
                                         while (time < waitUntil)
@@ -372,7 +370,7 @@ public class VuforiaView extends LinearOpMode {
                                                 inARow++;
 
                                                 //if more than 13 in a row, reset counters as if interrupted because this is the end/past the end of the first hex
-                                                if (inARow > 13) {
+                                                if (inARow > 9) {
                                                     onFirstHex = false;
                                                     inARow = 0;
                                                 }
@@ -419,7 +417,6 @@ public class VuforiaView extends LinearOpMode {
 
 
                                 telemetry.addLine(pictographCode + "");
-                                telemetry.addLine("" + pictographCodes[0] + ", " + pictographCodes[1] + ", " + pictographCodes[2] + ", " + pictographCodes[3] + ", " + pictographCodes[4]);
                                 telemetry.update();
 
 
@@ -449,7 +446,7 @@ public class VuforiaView extends LinearOpMode {
 
                         telemetry.addLine(finalColumn);
                         telemetry.addLine("" + codes[0] + ", " + codes[1] + ", " + codes[2]);
-                        telemetry.addLine("" + pictographCodes[0] + ", " + pictographCodes[1] + ", " + pictographCodes[2] + ", " + pictographCodes[3] + ", " + pictographCodes[4]);
+                        telemetry.addLine("Time: " + (time - startTime));
                         telemetry.update();
                     }
                     runCount++;
