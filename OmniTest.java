@@ -52,8 +52,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Template: Iterative OpMode", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
-@Disabled
+@TeleOp(name="OmniBot test", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
 public class OmniTest extends OpMode
 {
     /* Declare OpMode members. */
@@ -81,8 +80,8 @@ public class OmniTest extends OpMode
 
         // eg: Set the drive motor directions:
         // Reverse the motor that runs backwards when connected directly to the battery
-         backLeftMotor.setDirection(DcMotor.Direction.REVERSE ); // Set to REVERSE if using AndyMark motors
-        backRightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+      //   backLeftMotor.setDirection(DcMotor.Direction.REVERSE ); // Set to REVERSE if using AndyMark motors
+       // backRightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         // telemetry.addData("Status", "Initialized");
     }
 
@@ -107,15 +106,15 @@ public class OmniTest extends OpMode
     @Override
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
-        float x = gamepad1.left_stick_x;
+        float x = -gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;
         float r = -gamepad1.right_stick_x;
 
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         backLeftMotor.setPower(clip(x-y+r));
         backRightMotor.setPower(clip(x+y+r));
-        frontLeftMotor.setPower(clip(-x+y+r));
-        frontRightMotor.setPower(clip(-x-y+r));
+        frontLeftMotor.setPower(clip(-x-y+r));
+        frontRightMotor.setPower(clip(-x+y+r));
     }
 
     /*

@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.SimpleServo.teleop.CrossCommunicator;
 
 public class ServoController {
     private Servo servo;
+    private Servo servo2;
     private Telemetry telemetry;
 
     private void log(String data) {
@@ -23,6 +24,8 @@ public class ServoController {
         this.telemetry = telemetry;
         servo = hardwareMap.servo.get(CrossCommunicator.Servo.SERVO);
         servo.setPosition(0);
+        servo2 = hardwareMap.servo.get("servo2");
+        servo2.setPosition(0);
     }
 
     public void start() {
@@ -30,17 +33,15 @@ public class ServoController {
     }
 
     private double pos = 0;
-    private double dir = 0.0001;
-    private int loopCount = 0;
+    private double dir = 0.1;
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
-        loopCount++;
-        if (loopCount == 1) {
+        if (pos < 1) {
             pos += dir;
-            if (pos >= 1 || pos <= -1) {
-                dir *= -1;
-            }
-            servo.setPosition(pos);
-            loopCount = 0;
+            servo2.setPosition(pos);
+            log("" + pos);
+        } else if (pos < 2){
+            pos += dir;
+            servo.setPosition(pos - 1);
             log("" + pos);
         }
     }

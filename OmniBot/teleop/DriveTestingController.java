@@ -23,10 +23,11 @@ public class DriveTestingController {
 
 
 
-    private static double MAX_MOTOR_SPEED = 360;
-    private static double RATIO_WHEEL = 5000;
-    private static double RATIO_BOT = 360;
-    private static boolean MOTORS = false;
+    private static double MAX_MOTOR_SPEED = 2900;
+    private static boolean MODE_VELOCITY = false;
+    private static double RATIO_WHEEL = 5900; //in encoder counts
+    private static double RATIO_BOT = 1120;
+    private static boolean MOTORS = true;
     private static double TURN_SPEED_RATIO = 1;
 
     private Telemetry telemetry;
@@ -49,13 +50,21 @@ public class DriveTestingController {
 
         if (MOTORS) {
             motorUp = hardwareMap.dcMotor.get(CrossCommunicator.drive.UP);
-            motorUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motorDown = hardwareMap.dcMotor.get(CrossCommunicator.drive.DOWN);
-            motorDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motorLeft = hardwareMap.dcMotor.get(CrossCommunicator.drive.LEFT);
-            motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motorRight = hardwareMap.dcMotor.get(CrossCommunicator.drive.RIGHT);
-            motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            if (MODE_VELOCITY) {
+                motorUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            } else {
+                motorUp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motorDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
         }
         telemetry.addLine("Status: Initialized and Ready!");
         telemetry.update();
@@ -99,10 +108,10 @@ public class DriveTestingController {
 
         stopped = (gamepad1.left_stick_x == 0 && -gamepad1.left_stick_y == 0) ? 0 : 1;
 
-        tempMotors[2] = -stopped*Math.cos((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
-        tempMotors[3] = stopped*Math.cos((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
-        tempMotors[0] = -stopped*Math.sin((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
-        tempMotors[1] = stopped*Math.sin((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
+        tempMotors[2] = stopped*Math.cos((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
+        tempMotors[3] = -stopped*Math.cos((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
+        tempMotors[0] = stopped*Math.sin((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
+        tempMotors[1] = -stopped*Math.sin((theta + translationDirection)*(Math.PI/180d)) + addedRotation;
 
         double scale = Math.max(Math.max(Math.abs(tempMotors[0]), Math.abs(tempMotors[1])), Math.max(Math.abs(tempMotors[2]), Math.abs(tempMotors[3])));
         if (scale == 0) {
@@ -116,41 +125,53 @@ public class DriveTestingController {
         tempMotors[1] *= scale;
         tempMotors[2] *= scale;
         tempMotors[3] *= scale;
-        /*telemetry.addData("Gamepad Left Stick X: ", gamepad1.left_stick_x);
-        telemetry.addData("Gamepad Left Stick Y: ", -gamepad1.left_stick_y);
-        telemetry.addData("Gamepad Right Stick X: ", gamepad1.right_stick_x);
-        telemetry.addData("Theta: ", theta);
-        telemetry.addData("Translation Direction: ", translationDirection);
-        telemetry.addData("Added Rotation: ", addedRotation);
-        telemetry.addData("Time Elapsed: ", timeElapsed);
-        telemetry.addData("Scale: ", scale);
-        telemetry.addData("Up Motor: ", tempMotors[3]);
-        //telemetry.addData("Down Motor: ", tempMotors[1]);
-        telemetry.addData("Left Motor: ", tempMotors[2]);
-        //telemetry.addData("Right Motor: ", tempMotors[3]); //Too much telemetry --> gets cut off
+        telemetry.addLine("Gamepad Left Stick X: " + gamepad1.left_stick_x);
+        telemetry.addLine("Gamepad Left Stick Y: " + -gamepad1.left_stick_y);
+        telemetry.addLine("Gamepad Right Stick X: " + gamepad1.right_stick_x);
+        telemetry.addLine("Theta: " + theta);
+        telemetry.addLine("Translation Direction: " + translationDirection);
+        telemetry.addLine("Added Rotation: " + addedRotation);
+        telemetry.addLine("Time Elapsed: " + timeElapsed);
+        telemetry.addLine("Scale: " + scale);
+        telemetry.addLine("Up Motor: " + tempMotors[3]);
+        telemetry.addLine("Down Motor: " + tempMotors[1]);
+        telemetry.addLine("Left Motor: " + tempMotors[2]);
+        telemetry.addLine("Right Motor: " + tempMotors[3]);
 
-        telemetry.update();*/
-
-        if (MOTORS) {
-            motorUp.setPower(tempMotors[0]);
-            motorDown.setPower(tempMotors[1]);
-            motorLeft.setPower(tempMotors[2]);
-            motorRight.setPower(tempMotors[3]);
-        }
-
-        // dw/s * s = dw -> dw * db/dw = db
-        timeThisRun = runtime.time() - timeElapsed;
-        timeElapsed = runtime.time();
-        // (Always 1 if no Left Joystick) * (Actual Motor Speed?)
-        theta += (scale * addedRotation * MAX_MOTOR_SPEED) * timeThisRun * (RATIO_BOT/RATIO_WHEEL);
-        telemetry.addData("Gamepad Right Stick X: ", gamepad1.right_stick_x);
-        telemetry.addData("Time Elapsed: ", timeThisRun);
-        telemetry.addData("Rot * Scale * Time Elapsed: ", addedRotation * scale * timeThisRun);
-        telemetry.addData("Ratio: ", RATIO_BOT/RATIO_WHEEL);
-        telemetry.addData("All Together: ", addedRotation * scale * timeThisRun * (RATIO_BOT/RATIO_WHEEL));
-        telemetry.addData("Theta: ", theta);
         telemetry.update();
 
+        if (MOTORS) {
+            if (MODE_VELOCITY) {
+                motorUp.setPower(tempMotors[0]);
+                motorDown.setPower(tempMotors[1]);
+                motorLeft.setPower(tempMotors[2]);
+                motorRight.setPower(tempMotors[3]);
+            } else {
+                motorUp.setTargetPosition(motorUp.getCurrentPosition() + (int) tempMotors[0]*100);
+                motorDown.setTargetPosition(motorDown.getCurrentPosition() + (int) tempMotors[1]*100);
+                motorLeft.setTargetPosition(motorLeft.getCurrentPosition() + (int) tempMotors[2]*100);
+                motorRight.setTargetPosition(motorRight.getCurrentPosition() + (int) tempMotors[3]*100);
+            }
+        }
+
+        if (MODE_VELOCITY) {
+            // dw/s * s = dw -> dw * db/dw = db
+            timeThisRun = runtime.time() - timeElapsed;
+            timeElapsed = runtime.time();
+            // (Always 1 if no Left Joystick) * (Actual Motor Speed?)
+            theta += (scale * addedRotation * MAX_MOTOR_SPEED) * timeThisRun * (RATIO_BOT / RATIO_WHEEL);
+            telemetry.addData("Gamepad Right Stick X: ", gamepad1.right_stick_x);
+            telemetry.addData("Time Elapsed: ", timeThisRun);
+            telemetry.addData("Rot * Scale * Time Elapsed: ", addedRotation * scale * timeThisRun);
+            telemetry.addData("Ratio: ", RATIO_BOT / RATIO_WHEEL);
+            telemetry.addData("All Together: ", addedRotation * scale * timeThisRun * (RATIO_BOT / RATIO_WHEEL));
+            telemetry.addData("Theta: ", theta);
+            telemetry.update();
+        } else {
+            runtime.reset();
+            while (runtime.time() < 0.05) {}
+            theta += (scale * addedRotation * 100) * (RATIO_BOT / RATIO_WHEEL);
+        }
     }
 
     public void stop() {
